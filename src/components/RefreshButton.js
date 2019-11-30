@@ -1,5 +1,15 @@
 import React from 'react'
 
+// const RefreshButton = () => {
+
+//   return (
+//     <button type="button" className="refresh" onClick={() => window.location.reload(true)}>Refresh</button>
+//   )
+
+// }
+
+// export default RefreshButton
+
 class RefreshButton extends React.Component {
   constructor() {
     super()
@@ -8,7 +18,7 @@ class RefreshButton extends React.Component {
     }
     this.handleClick = this.handleClick.bind(this)
   }
-  
+
   handleClick() {
     location.reload()
   }

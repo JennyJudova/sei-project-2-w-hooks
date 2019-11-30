@@ -21,14 +21,14 @@ class ShowPage extends React.Component {
 
     this.state = {
       weather: null,
-      errorData: null, 
+      errorData: null,
       errorNews: null,
       news: null
     }
     this.getData = this.getData.bind(this)
     this.getNews = this.getNews.bind(this)
   }
-  
+
   componentDidMount() {
     this.getData()
   }
@@ -42,13 +42,14 @@ class ShowPage extends React.Component {
   // // //     .then(response => res.status(200).json(response.data))
   // // //     .catch(err => console.log(err))
   // // // })
+  // https://cors-anywhere.herokuapp.com/
 
   getData() {
     const token = process.env.REACT_APP_WEATHER_ACCESS_KEY
     const city = this.props.match.params.id
     axios.get(`https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${token}`) // works but takes a ton of time (`https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${token}`)
       .then(res => this.setState({ weather: res.data }, this.getNews))
-      .catch(err => this.setState({ errorData: err.message })) 
+      .catch(err => this.setState({ errorData: err.message }))
   }
 
   getNews() {
@@ -56,68 +57,68 @@ class ShowPage extends React.Component {
     const country = this.state.weather.sys.country
     axios.get(`https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${tokenNews}`)
       .then(res => this.setState({ news: res.data }))
-      .catch(err => this.setState({ errorNews: err }))
+      .catch(err => this.setState({ errorNews: err.message }))
   }
-  
+
   render() {
     const { weather, news, errorData } = this.state
     return (
       <>
-      <section className="mainShow">
-        {errorData &&
+        <section className="mainShow">
+          {errorData &&
             <h1>C&apos;mon, nobody lives there!</h1>
-        }
-
-        {weather &&
-        <section className="top">
-          <section className="weather">
-            <h2>The weather in {weather.name} is:</h2>
-            <h3>The tempterature will be between:</h3>
-            <p>{Math.round(weather.main.temp_min - 273.15)}°C - {Math.round(weather.main.temp_max - 273.15)}°C</p>
-            <div className="animal">
-              <div className={weather.weather[0].main}>{weather.weather[0].description}</div>
-            </div>
-          </section>
-          
-          <section className="random">
-            <h2>Your fun fact for the day:</h2>
-            <div className="space"></div>
-            <Quote />
-          </section>
-        </section>
-        }
-
-        <section className="bottom">
-          {weather && news && news.totalResults > 0 &&
-          <div className="news">
-            <h2>Local News</h2>
-            <ul>
-              {news.articles.filter((article, index) => (index < 5)).map(article => {
-                return <li key={article.url}>
-                  <p src={article.url}>{article.title}</p>
-                  <a href={article.url}>
-                    <p>Read Full Story</p>
-                  </a>
-                </li>
-              })}
-            </ul>
-          </div>
           }
-          { weather && weather.name === 'London' &&
-            <LondonTube />
-          }
-        </section>
-        <section className="buttons">
+
           {weather &&
-            <RefreshButton />
+            <section className="top">
+              <section className="weather">
+                <h2>The weather in {weather.name} is:</h2>
+                <h3>The tempterature will be between:</h3>
+                <p>{Math.round(weather.main.temp_min - 273.15)}°C - {Math.round(weather.main.temp_max - 273.15)}°C</p>
+                <div className="animal">
+                  <div className={weather.weather[0].main}>{weather.weather[0].description}</div>
+                </div>
+              </section>
+
+              <section className="random">
+                <h2>Your fun fact for the day:</h2>
+                <div className="space"></div>
+                <Quote />
+              </section>
+            </section>
           }
-          <Link to={'/'} >
-            <button className="newCity">
-              Choose a Different City
-            </button> 
-          </Link>
+
+          <section className="bottom">
+            {weather && news && news.totalResults > 0 &&
+              <div className="news">
+                <h2>Local News</h2>
+                <ul>
+                  {news.articles.filter((article, index) => (index < 5)).map(article => {
+                    return <li key={article.url}>
+                      <p src={article.url}>{article.title}</p>
+                      <a href={article.url}>
+                        <p>Read Full Story</p>
+                      </a>
+                    </li>
+                  })}
+                </ul>
+              </div>
+            }
+            {weather && weather.name === 'London' &&
+              <LondonTube />
+            }
+          </section>
+          <section className="buttons">
+            {weather &&
+              <RefreshButton />
+            }
+            <Link to={'/'} >
+              <button className="newCity">
+                Choose a Different City
+            </button>
+            </Link>
+          </section>
         </section>
-      </section>
       </>
     )
   }
@@ -156,7 +157,7 @@ export default ShowPage
 //     this.handleClickCity = this.handleClickCity.bind(this)
 //     this.getData = this.getData.bind(this)
 //   }
-  
+
 //   handleClick() {
 //     location.reload()
 //   }
@@ -164,7 +165,7 @@ export default ShowPage
 //   handleClickCity() {
 //     this.props.history.push('/')
 //   }
-  
+
 //   componentDidMount() {
 //     this.getData()
 //   }
@@ -188,7 +189,7 @@ export default ShowPage
 //       .then(res => this.setState({ news: res.data.articles }))
 //       .catch(err => this.setState({ errorNews: err }))
 //   }
-  
+
 //   render() {
 //     //  MUST ALWAYS HAVE THE RETURN NULL BEFORE TRYING TO RETRIEVE THINGS INSIDE THE OBJECT:
 //     if (!this.state.weather) return null

@@ -8,11 +8,11 @@ require('dotenv').config()
 
 module.exports = {
   entry: './src/app.js',
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve('dist'),
-    publicPath: '/'
-  },
+  // output: {
+  //   filename: 'bundle.js',
+  //   path: path.resolve('dist'),
+  //   publicPath: '/'
+  // },
   module: {
     rules: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },

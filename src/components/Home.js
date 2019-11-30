@@ -35,7 +35,6 @@ class Home extends React.Component {
   }
 
   render() {
-    console.log('sanity check')
     return (
       <>
         <div className="container">
