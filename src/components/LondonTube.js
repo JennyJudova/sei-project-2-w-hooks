@@ -1,44 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-class LondonTube extends React.Component {
-  constructor() {
-    super()
+export default function LondonTube() {
+  const [lines, setLines] = useState()
+  const [error, setError] = useState()
 
-    this.state = {
-      lines: null,
-      error: null
-    }
+  useEffect(() => {
+    getTubeData()
+    console.log(lines)
+  }, [])
 
-  }
-
-  componentDidMount(){
-    this.getTubeData()
-  }
-
-  getTubeData() {
+  function getTubeData() {
     axios.get('https://api.tfl.gov.uk/line/mode/tube/status')
-      .then(res => this.setState({ lines: res.data }))
-      .catch(err => this.setState({ error: err.message }))
+      .then(res => setLines(res.data))
+      .catch(err => setError(err.message))
   }
-  
-  render() {
-    const { lines } = this.state
-    return (
-      <div className="tube">
-        <h2 className="tubeLine">Tube status</h2>
-        <ul>
-          {lines &&
-        lines.map(line => {
-          return <li key={line.id}>
-            <p>{line.name} - {line.lineStatuses[0].statusSeverityDescription}</p>
-          </li>
-        })
-          }
-        </ul>
-      </div>
-    )
-  }
-}
 
-export default LondonTube
+  return (
+    <div className="tube">
+      <h2 className="tubeLine">Tube status</h2>
+      <ul>
+        {lines &&
+          lines.map(line => {
+            return <li key={line.id}>
+              <p>{line.name} - {line.lineStatuses[0].statusSeverityDescription}</p>
+            </li>
+          })
+        }
+      </ul>
+    </div>
+  )
+}

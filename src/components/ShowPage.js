@@ -115,7 +115,7 @@ class ShowPage extends React.Component {
             <Link to={'/'} >
               <button className="newCity">
                 Choose a Different City
-            </button>
+              </button>
             </Link>
           </section>
         </section>
