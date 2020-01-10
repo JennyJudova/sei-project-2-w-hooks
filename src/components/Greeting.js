@@ -1,42 +1,90 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
 export default function Greeting() {
-  const [prettyYou, setPrettyYou] = useState()
+  const [prettyYou, setPrettyYou] = useState();
 
   useEffect(() => {
-    getGreeting()
-  })
+    getGreeting();
+  });
 
   function getGreeting() {
-    const now = Date.now()
-    let date = new Date(now)
-    date = JSON.stringify(date)
-    let currentTime = parseInt('' + date[12] + date[13])
-    currentTime += 1
+    const now = Date.now();
+    let date = new Date(now);
+    date = JSON.stringify(date);
+    let currentTime = parseInt("" + date[12] + date[13]);
+    currentTime += 1;
 
-    let greetingYou = ''
+    let greetingYou = "";
 
     if (currentTime >= 6 && currentTime < 12) {
-      greetingYou = 'Good Morning'
+      greetingYou = "Good Morning";
     } else if (currentTime >= 12 && currentTime < 18) {
-      greetingYou = 'Good Afternoon'
+      greetingYou = "Good Afternoon";
     } else if (currentTime >= 18) {
-      greetingYou = 'Good Evening'
-    } else greetingYou = 'Good Night '
+      greetingYou = "Good Evening";
+    } else greetingYou = "Good Night ";
 
-    getPretty(greetingYou)
+    getPretty(greetingYou);
   }
 
   function getPretty(greetingYou) {
-    const prettyArray = ['Munchkin', 'Sausage', 'Puppet', 'Piglet', 'Cookie', 'Beautiful', 'Pumpkin', 'Little troll', 'Little cabbage', 'My flea', 'Honey', 'Cookie', 'Darling']
-    const pretty = prettyArray[Math.floor(Math.random() * (prettyArray.length))]
-    const prettyGreeting = `${greetingYou} ${pretty}`
-    setPrettyYou(prettyGreeting)
+    const prettyArray = [
+      "Munchkin",
+      "Sausage",
+      "Puppet",
+      "Piglet",
+      "Cookie",
+      "Beautiful",
+      "Pumpkin",
+      "Little troll",
+      "Little cabbage",
+      "My flea",
+      "Honey",
+      "Cookie",
+      "Darling"
+    ];
+    const pretty = prettyArray[Math.floor(Math.random() * prettyArray.length)];
+    const prettyGreeting = `${greetingYou} ${pretty}`;
+    setPrettyYou(prettyGreeting);
   }
 
   return (
     <div>
-      <h1 className=''>{prettyYou}</h1>
+      <h1 className="">{prettyYou}</h1>
     </div>
-  )
+  );
 }
+
+// import React, { useState, useEffect } from 'react';
+
+// export default function Greeting() {
+//   const [greeting, setGreeting] = useState('Hello');
+
+//   function getGreeting() {
+//     const today = new Date();
+//     const currentTime = today.getHours();
+
+//     let greetingYou = '';
+
+//     if (currentTime >= 6 && currentTime < 12) {
+//       greetingYou = 'Good Morning';
+//     } else if (currentTime >= 12 && currentTime < 18) {
+//       greetingYou = 'Good Afternoon';
+//     } else if (currentTime >= 18) {
+//       greetingYou = 'Good Evening';
+//     } else greetingYou = 'Good Night ';
+
+//     setGreeting(greetingYou);
+//     console.log('greeting', currentTime);
+//   }
+
+//   useEffect(() => {
+//     getGreeting();
+//   }, []);
+
+//   return (
+//     <div>
+//       <h3>{greeting}, where do you want to know the weather?</h3>
+//     </div>
+//   );
+// }
